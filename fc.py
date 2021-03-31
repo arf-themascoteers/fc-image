@@ -6,19 +6,19 @@ import numpy as np
 
 class FullyConnected:
     def __init__(self, train_x, train_y, test_x, test_y):
-        self.input_layer = InputLayer(train_x.shape[1])
-        self.output_layer = OutputLayer(len(train_y), self.input_layer)
-        self.input_layer.prev_layer = self.output_layer
-        self.accuracy = 0
-        self.loss = 0
         self.train_x = train_x
         self.train_y = train_y
         self.test_x = test_x
         self.test_y = test_y
         self.preprocess()
-        self.add_layer(LayerDense(train_x.shape[1], 64))
-        self.add_layer(LayerDense(32,64))
-        self.add_layer(LayerDense(64,len(train_y)))
+        self.input_layer = InputLayer(self.train_x.shape[1])
+        self.output_layer = OutputLayer(len(self.train_y), self.input_layer)
+        self.input_layer.prev_layer = self.output_layer
+        self.accuracy = 0
+        self.loss = 0
+        self.add_layer(LayerDense(self.train_x.shape[1], 64))
+        self.add_layer(LayerDense(64,32))
+        self.add_layer(LayerDense(32,len(self.train_y)))
         self.optimizer = OptimizerAdam(learning_rate=0.05, decay=5e-7)
 
     def preprocess(self):
